@@ -85,14 +85,14 @@ export default class Timer extends Component {
                 sticky: true,
                 sound: true,
             },
-            expiration: 6,
-                        // expiration: 600000,
+            // expiration: 6,
+                        expiration: 600000,
             sound: true
         };
 
         const schedulingOptions = {
-            time: (new Date()).getTime() + 50,
-            // time: (1548914400000 + 86400000),
+            // time: (new Date()).getTime() + 50,
+            time: (1548914400000 + 86400000),
             repeat: 'day'
         }
         console.log(new Date().getTime())
