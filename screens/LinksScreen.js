@@ -69,7 +69,7 @@
 // import {Notifications} from 'expo';
 
 // class ScamNotification extends React.Component {
-  
+
 //   localNotification = {
 //     title: 'Have You read the',
 //     body: 'Android ndi bad guys',
@@ -79,9 +79,9 @@
 //       link: true
 //     }
 //   };
-  
-  
-  
+
+
+
 //   render(){
 //   let t = new Date();
 //   t.setSeconds(t.getSeconds() + 10);
@@ -178,25 +178,21 @@
 
 
 
-
-
-
-
-
-
 // Test code goes above
 
 import React from 'react';
-import Spacer from './Spacer';
+// import Spacer from './Spacer';
 import Data from '../data'
 import {
   Text,
-  View,
+  ScrollView,
   StyleSheet,
+  View,
+  Dimensions
 } from 'react-native';
 
 import {
-	Calendar
+  CalendarList,
 } from 'react-native-calendars';
 // import Timer from '../components/localNotification';
 
@@ -223,62 +219,55 @@ export default class LinksScreen extends React.Component {
       yearPicked: day.year
     });
   }
-  
+
   componentDidMount() {
     this.state.dayPicked = this.day;
     this.state.monthPicked = this.month;
     this.state.yearPicked = this.year;
-    // <ScamNotification />
   }
 
   render() {
     const { yearPicked, dayPicked, monthPicked } = this.state;
     console.log(dayPicked, monthPicked, yearPicked);
     return (
-      <View style={styles.container}>
-        <Calendar
-					hideExtraDays={false}
-					onDayPress={(day) => {
-						console.log('day pressed is: ', day);
-						this.changeDate(day);
-					}}
-					minDate={'2019-01-01'}
-					maxDate={'2019-12-31'}
-					theme={{
+      <ScrollView style={styles.container}>
+        <CalendarList
+          hideExtraDays={false}
+          onDayPress={(day) => {
+            console.log('day pressed is: ', day);
+            this.changeDate(day);
+          }}
+          minDate={'2019-01-01'}
+          maxDate={'2019-12-31'}
+          theme={{
             selectedDotColor: 'blue',
-            // todayTextColor: 'green',
             selectedDayTextColor: 'white',
             selectedDayBackgroundColor: 'purple',
-						// agendaDayTextColor: 'darkgrey',
-						// agendaDayNumColor: 'green',
-						// agendaTodayColor: 'purple',
-						// agendaKnobColor: 'blue'
-					}}
-					pastScrollRange={1}
-					futureScrollRange={12}
-					refreshing={true}
+          }}
+          pastScrollRange={1}
+          futureScrollRange={12}
+          refreshing={true}
           horizontal={true}
-				/>
-        {
-          ((yearPicked !== this.year) || (monthPicked > this.month) || ((monthPicked === this.month) && (dayPicked > this.day))) ?
-            (
-              <View style={{ padding: '3%' }}>
+        />
+        <View style={{ padding: '3%' }}>
+          {
+            ((yearPicked !== this.year) || (monthPicked > this.month) || ((monthPicked === this.month) && (dayPicked > this.day))) ?
+              (
                 <Text> Selection locked until due ! </Text>
-              </View>
-            ) :
-            (
-              <View style={{ padding: 20 }}>
-                <Text style={styles.h1}>
-                  {new Date(yearPicked, monthPicked, dayPicked).toDateString()}
-                </Text>
-                <Text style={styles.h3}>
-                  {Data[monthPicked][dayPicked]}
-                </Text>
-              </View>
-            )
-        }
-        {/* <Timer /> */}
-      </View>
+              ) :
+              (
+                <View>
+                  <Text style={styles.h1}>
+                    {new Date(yearPicked, monthPicked, dayPicked).toDateString()}
+                  </Text>
+                  <Text style={styles.h3}>
+                    {Data[monthPicked][dayPicked]}
+                  </Text>
+                </View>
+              )
+          }
+        </View>
+      </ScrollView>
     );
   }
 }
