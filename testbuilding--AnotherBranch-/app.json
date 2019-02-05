@@ -1,0 +1,33 @@
+{
+  "expo": {
+    "name": "The Word Mobile",
+    "slug": "thewordmobile",
+    "privacy": "public",
+    "sdkVersion": "32.0.0",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.illusionInc.wordMobile"
+    },
+    "description": "Inspiration is the mother of manifestation and cure of depression. Receive a daily word of inspiration from THE WORD MOBILE and connect to supernatural words that will help you achieve your goals and visions this year,\n God bless you.\n"
+  }
+}
