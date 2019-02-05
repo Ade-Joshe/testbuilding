@@ -21,16 +21,18 @@ export default class Timer extends Component {
             sound: true
         };
 
-        const check = () => {
-            if (new Date().getHours() === 9) {
-                console.warn('time says 9am')
-                return (new Date().getTime());
+        var check = () => {
+            let today = new Date().setHours(0, 0, 0, 0);
+            let tomorrow = today + 86400000;
+            if (new Date().getHours() === 1) {
+                // console.warn('time says 9am')
+                return (today);
             }
             else {
-                console.warn('time says something else');
+                // console.warn('time says something else');
                 Notifications.dismissAllNotificationsAsync();
                 Notifications.cancelAllScheduledNotificationsAsync();
-                return (new Date().setDate(new Date().getDate() + 1))
+                return (tomorrow)
             }
         }
 
@@ -38,8 +40,8 @@ export default class Timer extends Component {
         const schedulingOptions = {
             time: check(),
             repeat: 'day',
-            // check()
         }
+
         console.log(new Date().getTime())
 
         // Notifications show only when app is not active.
