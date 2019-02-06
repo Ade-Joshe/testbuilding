@@ -6,7 +6,7 @@ import { Constants, Notifications, Permissions } from 'expo';
 
 
 export default class Timer extends Component {
-    onSubmit(e) {
+    onSubmit() {
         const day = new Date().getDate();
         const month = new Date().getMonth();
         const localNotification = {
@@ -16,29 +16,11 @@ export default class Timer extends Component {
                 sticky: true,
                 sound: true,
             },
-            // expiration: 6,
-            expiration: 600000,
             sound: true
         };
 
-        var check = () => {
-            let today = new Date().setHours(0, 0, 0, 0);
-            let tomorrow = today + 86400000;
-            if (new Date().getHours() === 1) {
-                // console.warn('time says 9am')
-                return (today);
-            }
-            else {
-                // console.warn('time says something else');
-                Notifications.dismissAllNotificationsAsync();
-                Notifications.cancelAllScheduledNotificationsAsync();
-                return (tomorrow)
-            }
-        }
-
-
         const schedulingOptions = {
-            time: check(),
+            time: new Date().getTime() + 1000,
             repeat: 'day',
         }
 
@@ -49,18 +31,8 @@ export default class Timer extends Component {
         Notifications.scheduleLocalNotificationAsync(
             localNotification, schedulingOptions
         );
-    }
 
-    handleNotification() {
-        console.log('ok! got your notif');
-    }
-
-    async componentDidMount() {
-        console.log(new Date().getTime())
-        this.onSubmit();
-        // We need to ask for Notification permissions for ios devices
-
-        let result = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+        let result = Permissions.askAsync(Permissions.NOTIFICATIONS);
         if (Constants.isDevice && result.status === 'granted') {
             console.log('Notification permissions granted.')
         }
@@ -69,7 +41,24 @@ export default class Timer extends Component {
         // is active, we need to listen to notification events and 
         // handle them in a callback
         Notifications.addListener(this.handleNotification);
+
     }
+
+    handleNotification() {
+        console.log('ok! got your notif');
+    }
+
+    async componentDidMount() {
+        if (new Date().getHours() === 1) {
+            await this.onSubmit();
+        }
+        else {
+            Notifications.dismissAllNotificationsAsync();
+            Notifications.cancelAllScheduledNotificationsAsync();
+        }
+        console.log(new Date().getTime())
+    }
+
     render() {
         return (
             <View />
